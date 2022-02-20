@@ -8,17 +8,27 @@ import java.util.HashMap;
 
 public class Element {
 
+    private String id = "";
     private Stylesheet style;
     private ArrayList<Attribute> attributes = new ArrayList<>();
     private ArrayList<Element> content = new ArrayList<>();
 
     public Element() { this.style = new Stylesheet(); }
 
-    public Element(Stylesheet style, ArrayList<Attribute> attributes, ArrayList<Element> content) {
+    public Element(String id, Stylesheet style, ArrayList<Attribute> attributes, ArrayList<Element> content) {
         this.style = style;
         this.attributes = attributes;
         this.content = content;
+
+        if (id != null)
+            this.id = id;
     }
+
+    public void put(Element element) {
+        content.add(element);
+    }
+
+    public String getId() { return id; }
 
     public Stylesheet getStyle() {
         return style;
@@ -43,4 +53,5 @@ public class Element {
     public void setContent(ArrayList<Element> content) {
         this.content = content;
     }
+
 }
