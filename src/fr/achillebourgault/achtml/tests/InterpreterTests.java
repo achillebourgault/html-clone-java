@@ -5,7 +5,6 @@ import fr.achillebourgault.achtml.interpreter.Interpreter;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
 import java.util.concurrent.Callable;
 
 public class InterpreterTests {
@@ -18,42 +17,31 @@ public class InterpreterTests {
     }
 
     private void deployTests() {
-        Callable testManyClasses = new Callable() {
-            @Override
-            public Object call() {
-                String raw = "<div class=\"classA classB \"></div>";
-                Interpreter interpreter = new Interpreter(raw);
+        Callable testManyClasses = () -> {
+            String raw = "<div class=\"classA classB \"></div>";
+            Interpreter interpreter = new Interpreter(raw);
 
-                if (interpreter.getBody().getClasses().size() != 2)
-                    return false;
-                return true;
-            }
+            if (interpreter.getBody().getClasses().size() != 2)
+                return false;
+            return true;
         };
 
-        Callable testNoClasses = new Callable() {
-            @Override
-            public Object call() {
-                String raw = "<div></div>";
-                Interpreter interpreter = new Interpreter(raw);
+        Callable testNoClasses = () -> {
+            String raw = "<div></div>";
+            Interpreter interpreter = new Interpreter(raw);
 
-                System.out.println("div no class size = " + interpreter.getBody().getClasses().size());
-
-                if (interpreter.getBody().getClasses().size() != 0)
-                    return false;
-                return true;
-            }
+            if (interpreter.getBody().getClasses().size() != 0)
+                return false;
+            return true;
         };
 
-        Callable testManySpacesInClasses = new Callable() {
-            @Override
-            public Object call() {
-                String raw = "<div class=\"    classA      classB   classC  \"></div>";
-                Interpreter interpreter = new Interpreter(raw);
+        Callable testManySpacesInClasses = () -> {
+            String raw = "<div class=\"    classA      classB   classC  \"></div>";
+            Interpreter interpreter = new Interpreter(raw);
 
-                if (interpreter.getBody().getClasses().size() != 3)
-                    return false;
-                return true;
-            }
+            if (interpreter.getBody().getClasses().size() != 3)
+                return false;
+            return true;
         };
 
         testsMethods.add(testManyClasses);
